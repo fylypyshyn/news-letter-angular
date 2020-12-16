@@ -4,6 +4,7 @@ import {AuthenticationService} from 'app/core/services/authentication.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ROUTES} from 'app/routes.constants';
 import {SERVICE_CONSTANTS} from 'app/core/services/service.constants';
+import {finalize} from 'rxjs/operators';
 
 @Component({
     selector: 'app-login',
@@ -29,15 +30,16 @@ export class LoginComponent implements OnInit {
             const username = this.formGroup.get(SERVICE_CONSTANTS.USER_NAME).value;
             const password = this.formGroup.get(SERVICE_CONSTANTS.PASSWORD).value;
 
-            this.loginService.authenticate(username, password).subscribe(
-                data => {
-                    this.invalidLogin = false;
-                    this.router.navigate([ROUTES.USER_FORMS]);
-                },
-                error => {
-                    this.invalidLogin = true;
-                }
-            );
+            this.loginService.authenticate(username, password)
+                .pipe(finalize(() => this.router.navigate([ROUTES.USER_FORMS])))
+                .subscribe(
+                    () => {
+                        this.invalidLogin = false;
+                    },
+                    () => {
+                        this.invalidLogin = true;
+                    }
+                );
         }
     }
 
