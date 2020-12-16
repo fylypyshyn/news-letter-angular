@@ -24,7 +24,7 @@ body {
     text-transform: uppercase;
 }
 
-.phone-card {
+.news-letter-angularcard {
     margin: 30px 0 0 0;
 
     a {
@@ -50,7 +50,7 @@ body {
     }
 }
 
-.phone-title {
+.news-letter-angulartitle {
     position: relative;
 
     .mat-icon-button {
@@ -62,7 +62,7 @@ body {
 }
 
 @media screen and (max-width: 1200px) {
-    .phone-card {
+    .form-card {
         .mat-card-header {
             .mat-card-title {
                 font-size: 16px;
@@ -72,14 +72,14 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-    .phone-card {
+    .form-card {
         .mat-card-header {
             .mat-card-title {
                 font-size: 14px;
             }
         }
     }
-    .phone-title {
+    .form-title {
         font-size: 16px;
 
         .mat-icon-button {
