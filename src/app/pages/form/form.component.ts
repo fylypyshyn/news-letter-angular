@@ -1,11 +1,13 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClientService} from 'app/core/services/httpclient.service';
 import {IUserForm} from 'app/core/domain/IUserForm';
 import {Router} from '@angular/router';
 import {IImage} from 'app/core/domain/IImage';
 import {ROUTES} from 'app/routes.constants';
-
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {EGender} from 'app/core/domain/EGender';
 
 @Component({
     selector: 'app-user-form',
@@ -13,14 +15,19 @@ import {ROUTES} from 'app/routes.constants';
     styleUrls: ['./form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
 
     formGroup: FormGroup;
     userForm: IUserForm;
 
+    gender = EGender;
+    enumKeys = [];
+
     selectedFiles: FileList;
     currentFile: File;
     message = '';
+
+    private destroy$ = new Subject<void>();
 
     constructor(private formBuilder: FormBuilder,
                 private clientService: HttpClientService,
@@ -29,31 +36,39 @@ export class FormComponent implements OnInit {
 
     ngOnInit() {
         this.initFormGroup();
+        this.enumKeys = Object.keys(this.gender);
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.unsubscribe();
     }
 
     public saveUserForm() {
         if (this.formGroup.valid) {
             this.userForm = new IUserForm(this.formGroup.value);
             this.userForm.langKey = 'en';
-            this.clientService.createUserForms(this.userForm).subscribe(
-                () => {
-                    this.router.navigate([ROUTES.HOME]);
-                }
-            );
+            this.clientService.createUserForms(this.userForm)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe(
+                    () => {
+                        this.router.navigate([ROUTES.HOME]);
+                    }
+                );
         }
     }
 
-    selectFile(event) {
+    public selectFile(event) {
         this.selectedFiles = event.target.files;
     }
 
-    upload() {
+    public upload() {
         this.currentFile = this.selectedFiles.item(0);
         this.clientService.uploadImage(this.currentFile).subscribe(
             event => {
                 this.formGroup.get('image').setValue(new IImage(event));
             },
-            err => {
+            () => {
                 this.message = 'Could not upload the file!';
                 this.currentFile = undefined;
             });
@@ -68,8 +83,8 @@ export class FormComponent implements OnInit {
             email: ['', Validators.email],
             address: ['', Validators.required],
             gender: ['', Validators.required],
-            phoneNumber: ['', Validators.required],
-            image: ['', new IImage()]
+            phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+            image: ['', []]
         });
     }
 }

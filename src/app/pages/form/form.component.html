@@ -7,7 +7,7 @@
                     <input matInput placeholder="First Name" formControlName="firstName" required>
                 </label>
                 <mat-error>
-                    Please provide firstName
+                    Please provide first name
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
@@ -15,7 +15,7 @@
                     <input matInput placeholder="Last Name" formControlName="lastName" required>
                 </label>
                 <mat-error>
-                    Please provide lastName
+                    Please provide last name
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
@@ -35,22 +35,21 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
-                <label> Gender
-                    <select matNativeControl formControlName="gender" required>
-                        <option value="MALE">MALE</option>
-                        <option value="FEMALE">FEMALE</option>
-                    </select>
-                </label>
+                <mat-select formControlName="gender" placeholder="Gender">
+                    <mat-option *ngFor="let name of enumKeys" [value]="name">
+                        {{gender[name]}}
+                    </mat-option>
+                </mat-select>
                 <mat-error>
                     Please provide gender
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
                 <label>
-                    <input matInput placeholder="news-letter-angular Number" formControlName="phoneNumber" required>
+                    <input matInput placeholder="Phone Number" formControlName="phoneNumber" required>
                 </label>
                 <mat-error>
-                    Please provide phoneNumber
+                    Please provide phone number
                 </mat-error>
             </mat-form-field>
             <div class="full-width-input">
@@ -59,7 +58,7 @@
                 </label>
                 <button mat-raised-button color="warn" [disabled]="!selectedFiles" (click)="upload()">Upload</button>
             </div>
-            <button mat-raised-button color="primary">Create</button>
+            <button mat-raised-button color="primary" [disabled]="!formGroup.valid">Create</button>
         </form>
     </mat-card-content>
 </mat-card>

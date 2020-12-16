@@ -21,12 +21,12 @@ const routes: Routes = [
         component: LoginComponent
     },
     {
-        path: ROUTES.USER_FORMS, loadChildren: () => import('./pages/userForms/user-forms.module').then(m => m.UserFormsModule), canActivate: [AuthGuardService],
-        resolve: {userForms: UserFormResolver}
-    },
-    {
         path: ROUTES.LOGOUT, canActivate: [AuthGuardService],
         component: LogoutComponent
+    },
+    {
+        path: ROUTES.USER_FORMS, loadChildren: () => import('./pages/userForms/user-forms.module').then(m => m.UserFormsModule), canActivate: [AuthGuardService],
+        resolve: {userForms: UserFormResolver}
     }
 
 ];
