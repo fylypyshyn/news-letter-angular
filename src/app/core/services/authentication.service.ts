@@ -17,7 +17,7 @@ export class AuthenticationService {
 
     authenticate(login, password) {
         sessionStorage.clear();
-        return this.httpClient.post<IJwtResponse>(SERVICE_CONSTANTS.API_URL + 'auth/signin', {login, password}).pipe(
+        return this.httpClient.post<IJwtResponse>(SERVICE_CONSTANTS.API_URL + SERVICE_CONSTANTS.AUTH_PATH, {login, password}).pipe(
             map(
                 userData => {
                     sessionStorage.setItem(SERVICE_CONSTANTS.USER_NAME, userData.userName);

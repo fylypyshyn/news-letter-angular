@@ -19,18 +19,18 @@ export class HttpClientService {
 
     getUserFormsDesc(): Observable<IUserForm[]> {
         const headers = new HttpHeaders({Authorization: this.jwtType + ' ' + this.jwt});
-        return this.httpClient.get<IUserForm[]>(SERVICE_CONSTANTS.API_URL + 'userForms', {headers});
+        return this.httpClient.get<IUserForm[]>(SERVICE_CONSTANTS.API_URL + SERVICE_CONSTANTS.USER_FORMS, {headers});
     }
 
     createUserForms(userForm: IUserForm): Observable<IUserForm> {
         const headers = new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'});
-        return this.httpClient.post<IUserForm>(SERVICE_CONSTANTS.API_URL + 'userForms', JSON.stringify(userForm), {headers});
+        return this.httpClient.post<IUserForm>(SERVICE_CONSTANTS.API_URL + SERVICE_CONSTANTS.USER_FORMS, JSON.stringify(userForm), {headers});
     }
 
     uploadImage(file: File) {
         const formData: FormData = new FormData();
         formData.append(SERVICE_CONSTANTS.PARAM_NAME_FILE_UPLOAD, file);
 
-        return this.httpClient.post<any>(SERVICE_CONSTANTS.API_URL + 'upload', formData);
+        return this.httpClient.post<any>(SERVICE_CONSTANTS.API_URL + SERVICE_CONSTANTS.UPLOAD, formData);
     }
 }

@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {PaginationService} from 'app/core/services/pagination.service';
 import {IUserForm} from 'app/core/domain/IUserForm';
 import {MatTableDataSource} from '@angular/material/table';
+import {ROUTES} from 'app/routes.constants';
 
 @Component({
     selector: 'app-user-forms',
@@ -15,7 +16,7 @@ export class UserFormsComponent implements OnInit {
 
     displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'address', 'gender', 'phoneNumber', 'createdDate'];
 
-    userForms: IUserForm[] = this.route.snapshot.data['userForms'];
+    userForms: IUserForm[] = this.route.snapshot.data[ROUTES.USER_FORMS];
     dataSource = new MatTableDataSource<IUserForm>(this.userForms);
     public currentUserForms: IUserForm[];
 
@@ -32,7 +33,7 @@ export class UserFormsComponent implements OnInit {
         this.updatePaginatorValues();
     }
 
-    public setPhonesAndPaginationValues(event: PageEvent) {
+    public setUserFormsAndPaginationValues(event: PageEvent) {
         this.setPaginationValues(event);
         this.setCurrentUserForms(event);
     }

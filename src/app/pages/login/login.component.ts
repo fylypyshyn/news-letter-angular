@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from 'app/core/services/authentication.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ROUTES} from 'app/routes.constants';
+import {SERVICE_CONSTANTS} from 'app/core/services/service.constants';
 
 @Component({
     selector: 'app-login',
@@ -25,13 +26,13 @@ export class LoginComponent implements OnInit {
 
     public checkLogin() {
         if (this.formGroup.valid) {
-            const username = this.formGroup.get('username').value;
-            const password = this.formGroup.get('password').value;
+            const username = this.formGroup.get(SERVICE_CONSTANTS.USER_NAME).value;
+            const password = this.formGroup.get(SERVICE_CONSTANTS.PASSWORD).value;
 
             this.loginService.authenticate(username, password).subscribe(
                 data => {
-                    this.router.navigate([ROUTES.USER_FORMS]);
                     this.invalidLogin = false;
+                    this.router.navigate([ROUTES.USER_FORMS]);
                 },
                 error => {
                     this.invalidLogin = true;
