@@ -1,0 +1,31 @@
+<main class="main">
+    <p>
+        <mat-toolbar>
+            <button *ngIf="isUserLoggedIn()" routerLink="/" mat-icon-button class="example-icon favorite-icon"
+                    aria-label="Example icon-button with heart icon">
+            </button>
+            <button *ngIf="!isUserLoggedIn()" routerLink="/login" mat-icon-button class="example-icon"
+                    aria-label="Example icon-button with login icon">
+                <mat-icon>login</mat-icon>
+            </button>
+            <span>Axon</span>
+            <button *ngIf="isUserLoggedIn()" routerLink="/userForms" mat-icon-button class="example-icon favorite-icon"
+                    aria-label="Example icon-button with heart icon">
+                <mat-icon>home</mat-icon>
+            </button>
+            <button *ngIf="!isUserLoggedIn()" routerLink="/form" mat-icon-button class="example-icon favorite-icon"
+                    aria-label="Example icon-button with heart icon">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span class="example-spacer"></span>
+            <button *ngIf="isUserLoggedIn()" routerLink="/logout" mat-icon-button class="example-icon favorite-icon"
+                    aria-label="Example icon-button with heart icon">
+                <mat-icon>logout</mat-icon>
+            </button>
+
+        </mat-toolbar>
+    </p>
+    <div class="g-container-fluid">
+        <router-outlet></router-outlet>
+    </div>
+</main>

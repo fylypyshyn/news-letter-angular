@@ -1,0 +1,89 @@
+@import "assets/sccs/grid";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    background: #fff;
+    font-weight: 400;
+    color: #272828;
+}
+
+.deep-page {
+    padding: 20px 0;
+}
+
+.mat-toolbar {
+    margin: 0 0 20px;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.phone-card {
+    margin: 30px 0 0 0;
+
+    a {
+        text-decoration: none;
+    }
+
+
+    img {
+        width: 40%;
+        padding: 0;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .mat-card {
+        font-size: 0;
+        padding: 16px 16px 0 16px;
+        margin: 10px 0;
+    }
+
+    .mat-card-header {
+        justify-content: center;
+    }
+}
+
+.phone-title {
+    position: relative;
+
+    .mat-icon-button {
+        position: absolute;
+        left: 40px;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .phone-card {
+        .mat-card-header {
+            .mat-card-title {
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .phone-card {
+        .mat-card-header {
+            .mat-card-title {
+                font-size: 14px;
+            }
+        }
+    }
+    .phone-title {
+        font-size: 16px;
+
+        .mat-icon-button {
+            left: 20px;
+        }
+    }
+}

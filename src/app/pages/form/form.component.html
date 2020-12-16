@@ -1,0 +1,59 @@
+<mat-card>
+    <mat-card-content>
+        <form [formGroup]="formGroup" (ngSubmit)="saveUserForm()">
+            <h2>NewsLetter Form</h2>
+            <mat-form-field class="full-width-input">
+                <label>
+                    <input matInput placeholder="First Name" formControlName="firstName" required>
+                </label>
+                <mat-error>
+                    Please provide firstName
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width-input">
+                <label>
+                    <input matInput placeholder="Last Name" formControlName="lastName" required>
+                </label>
+                <mat-error>
+                    Please provide lastName
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width-input">
+                <label>
+                    <input matInput placeholder="Email" formControlName="email" required>
+                </label>
+                <mat-error>
+                    Please provide email
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width-input">
+                <label>
+                    <input matInput placeholder="Address" formControlName="address" required>
+                </label>
+                <mat-error>
+                    Please provide address
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width-input">
+                <label> Gender
+                    <select matNativeControl formControlName="gender" required>
+                        <option value="MALE">MALE</option>
+                        <option value="FEMALE">FEMALE</option>
+                    </select>
+                </label>
+                <mat-error>
+                    Please provide gender
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width-input">
+                <label>
+                    <input matInput placeholder="Phone Number" formControlName="phoneNumber" required>
+                </label>
+                <mat-error>
+                    Please provide phoneNumber
+                </mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary">Create</button>
+        </form>
+    </mat-card-content>
+</mat-card>
