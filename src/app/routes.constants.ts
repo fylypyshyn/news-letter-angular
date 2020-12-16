@@ -2,6 +2,10 @@ const slash = '/';
 export const ROUTES = {
     USER_FORMS: 'userForms',
     FORM: 'form',
+    LOGIN: 'login',
+    LOGOUT: 'logout',
+    HOME: '',
+    PATH_MATCH: 'full'
 };
 
 export const ROUTES_SLASHED = {

@@ -3,29 +3,29 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {ROUTES} from 'app/routes.constants';
 import {UserFormResolver} from 'app/core/resolvers/user-form-resolver.service';
-import {AuthGaurdService} from 'app/core/services/auth-gaurd.service';
+import {AuthGuardService} from 'app/core/services/auth-guard.service';
 import {LoginComponent} from 'app/pages/login/login.component';
 import {LogoutComponent} from 'app/pages/logout/logout.component';
 
 const routes: Routes = [
     {
-        path: '',
+        path: ROUTES.HOME,
         redirectTo: ROUTES.FORM,
-        pathMatch: 'full'
+        pathMatch: ROUTES.PATH_MATCH
     },
     {
         path: ROUTES.FORM, loadChildren: () => import('./pages/form/form.module').then(m => m.FormModule),
     },
     {
-        path: 'login',
+        path: ROUTES.LOGIN,
         component: LoginComponent
     },
     {
-        path: ROUTES.USER_FORMS, loadChildren: () => import('./pages/userForms/user-forms.module').then(m => m.UserFormsModule), canActivate: [AuthGaurdService],
+        path: ROUTES.USER_FORMS, loadChildren: () => import('./pages/userForms/user-forms.module').then(m => m.UserFormsModule), canActivate: [AuthGuardService],
         resolve: {userForms: UserFormResolver}
     },
     {
-        path: 'logout',
+        path: ROUTES.LOGOUT, canActivate: [AuthGuardService],
         component: LogoutComponent
     }
 

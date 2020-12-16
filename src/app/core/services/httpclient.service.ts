@@ -2,16 +2,15 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {IUserForm} from '../domain/IUserForm';
 import {Observable} from 'rxjs';
+import {SERVICE_CONSTANTS} from 'app/core/services/service.constants';
 
 @Injectable({
     providedIn: 'root'
 })
 export class HttpClientService {
 
-    jwtType = sessionStorage.getItem('jwt-type');
-    jwt = sessionStorage.getItem('jwt');
-
-    apiUrl = 'http://localhost:8080/api/';
+    jwtType = sessionStorage.getItem(SERVICE_CONSTANTS.JWT_TYPE);
+    jwt = sessionStorage.getItem(SERVICE_CONSTANTS.JWT);
 
     constructor(
         private httpClient: HttpClient
@@ -20,21 +19,18 @@ export class HttpClientService {
 
     getUserFormsDesc(): Observable<IUserForm[]> {
         const headers = new HttpHeaders({Authorization: this.jwtType + ' ' + this.jwt});
-        return this.httpClient.get<IUserForm[]>(this.apiUrl + 'userForms', {headers});
+        return this.httpClient.get<IUserForm[]>(SERVICE_CONSTANTS.API_URL + 'userForms', {headers});
     }
 
     createUserForms(userForm: IUserForm): Observable<IUserForm> {
         const headers = new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'});
-        return this.httpClient.post<IUserForm>(this.apiUrl + 'userForms', JSON.stringify(userForm), {headers});
+        return this.httpClient.post<IUserForm>(SERVICE_CONSTANTS.API_URL + 'userForms', JSON.stringify(userForm), {headers});
     }
 
     uploadImage(file: File) {
-
         const formData: FormData = new FormData();
+        formData.append(SERVICE_CONSTANTS.PARAM_NAME_FILE_UPLOAD, file);
 
-        formData.append('image', file);
-        const uploadData = new FormData();
-        uploadData.append('myFile', file, file.name);
-        return this.httpClient.post<any>(this.apiUrl + 'upload', formData);
+        return this.httpClient.post<any>(SERVICE_CONSTANTS.API_URL + 'upload', formData);
     }
 }

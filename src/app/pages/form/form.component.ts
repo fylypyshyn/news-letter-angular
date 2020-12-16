@@ -4,6 +4,7 @@ import {HttpClientService} from 'app/core/services/httpclient.service';
 import {IUserForm} from 'app/core/domain/IUserForm';
 import {Router} from '@angular/router';
 import {IImage} from 'app/core/domain/IImage';
+import {ROUTES} from 'app/routes.constants';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class FormComponent implements OnInit {
             this.userForm.langKey = 'en';
             this.clientService.createUserForms(this.userForm).subscribe(
                 () => {
-                    this.router.navigate(['']);
+                    this.router.navigate([ROUTES.HOME]);
                 }
             );
         }
@@ -60,8 +61,7 @@ export class FormComponent implements OnInit {
         this.selectedFiles = undefined;
     }
 
-
-    public initFormGroup() {
+    private initFormGroup() {
         this.formGroup = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],

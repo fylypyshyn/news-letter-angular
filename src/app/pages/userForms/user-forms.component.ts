@@ -5,7 +5,6 @@ import {PaginationService} from 'app/core/services/pagination.service';
 import {IUserForm} from 'app/core/domain/IUserForm';
 import {MatTableDataSource} from '@angular/material/table';
 
-
 @Component({
     selector: 'app-user-forms',
     templateUrl: './user-forms.component.html',
