@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClientService} from 'app/core/services/httpclient.service';
 import {IUserForm} from 'app/core/domain/IUserForm';
 import {Router} from '@angular/router';
-import {ROUTES} from 'app/routes.constants';
+import {IImage} from 'app/core/domain/IImage';
 
 
 @Component({
@@ -17,6 +17,10 @@ export class FormComponent implements OnInit {
     formGroup: FormGroup;
     userForm: IUserForm;
 
+    selectedFiles: FileList;
+    currentFile: File;
+    message = '';
+
     constructor(private formBuilder: FormBuilder,
                 private clientService: HttpClientService,
                 private router: Router) {
@@ -29,23 +33,43 @@ export class FormComponent implements OnInit {
     public saveUserForm() {
         if (this.formGroup.valid) {
             this.userForm = new IUserForm(this.formGroup.value);
+            this.userForm.langKey = 'en';
             this.clientService.createUserForms(this.userForm).subscribe(
                 () => {
-                    this.router.navigate([ROUTES.FORM]);
+                    this.router.navigate(['']);
                 }
             );
         }
     }
 
-    private initFormGroup() {
+    selectFile(event) {
+        this.selectedFiles = event.target.files;
+    }
+
+    upload() {
+        this.currentFile = this.selectedFiles.item(0);
+        this.clientService.uploadImage(this.currentFile).subscribe(
+            event => {
+                this.formGroup.get('image').setValue(new IImage(event));
+            },
+            err => {
+                this.message = 'Could not upload the file!';
+                this.currentFile = undefined;
+            });
+
+        this.selectedFiles = undefined;
+    }
+
+
+    public initFormGroup() {
         this.formGroup = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
             email: ['', Validators.email],
             address: ['', Validators.required],
             gender: ['', Validators.required],
-            phoneNumber: ['', Validators.required]
+            phoneNumber: ['', Validators.required],
+            image: ['', new IImage()]
         });
     }
-
 }
